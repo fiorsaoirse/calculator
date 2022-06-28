@@ -50,8 +50,6 @@ const div = (x: IRationalNumber, y: IRationalNumber): RationalType => {
 }
 
 const install = (): void => {
-    console.log('Start installing rational numbers package...');
-
     const types = [RATIONAL_NUMBER, RATIONAL_NUMBER] as const;
 
     register(OperationType.Make, types, make);
@@ -59,8 +57,6 @@ const install = (): void => {
     register(OperationType.Sub, types, sub);
     register(OperationType.Mul, types, mul);
     register(OperationType.Div, types, div);
-
-    console.log('Rational numbers package has been successfully installed!');
 }
 
 export default install;
