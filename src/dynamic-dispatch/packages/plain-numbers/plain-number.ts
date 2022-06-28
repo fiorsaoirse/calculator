@@ -20,7 +20,7 @@ const div = (x: number, y: number): PlainType => make(x / y);
 const install = (): void => {
     const types = [PLAIN_NUMBER, PLAIN_NUMBER] as const;
 
-    register(OperationType.Make, types, make);
+    register(OperationType.Make, PLAIN_NUMBER, make);
     register(OperationType.Add, types, add);
     register(OperationType.Sub, types, sub);
     register(OperationType.Mul, types, mul);

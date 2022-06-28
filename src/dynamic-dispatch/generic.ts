@@ -20,11 +20,14 @@ const isString = (value: unknown): value is string => typeof value === 'string';
 //     return typeof value === 'function' && value.
 // }
 
-export const register = (
+export function register(operation: Extract<OperationType, OperationType.Make>, type: TYPE, method: MakeFunction): void;
+export function register(operation: Exclude<OperationType, OperationType.Make>, type: TYPES, method: OperandsFunction): void;
+
+export function register(
     operation: OperationType,
     type: TYPE | TYPES,
     method: MakeFunction | OperandsFunction
-): void | never => {
+): void | never {
     if (operation === OperationType.Make) {
         if (!isString(type)) {
             throw new Error(`For make functions there is can be only one type in setting!`);
@@ -45,7 +48,7 @@ export const register = (
 }
 
 export function getMethod(operation: Extract<OperationType, OperationType.Make>, type: TYPE): MakeFunction;
-export function getMethod(operation: Exclude<OperationType, OperationType.Make>, type: TYPES): OperandsFunction;
+export function getMethod(operation: Extract<OperationType, OperationType.Make>, type: TYPE): OperandsFunction;
 
 export function getMethod(operation: OperationType, type: TYPE | TYPES): MakeFunction | OperandsFunction | never {
     if (operation === OperationType.Make) {

@@ -6,6 +6,6 @@ export enum OperationType {
     Div = 'div'
 }
 
-export type MakeFunction = (x: any) => any;
+export type MakeFunction = (...x: any[]) => any;
 
 export type OperandsFunction = (x: any, y: any) => any;

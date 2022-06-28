@@ -52,7 +52,7 @@ const div = (x: IRationalNumber, y: IRationalNumber): RationalType => {
 const install = (): void => {
     const types = [RATIONAL_NUMBER, RATIONAL_NUMBER] as const;
 
-    register(OperationType.Make, types, make);
+    register(OperationType.Make, RATIONAL_NUMBER, make);
     register(OperationType.Add, types, add);
     register(OperationType.Sub, types, sub);
     register(OperationType.Mul, types, mul);
