@@ -4,7 +4,8 @@
   "description": "Calculator with two-ways implementation: as dynamic-dispatch lib and as OOP-styled lib",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test-leaks": "jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,8 @@
   },
   "homepage": "https://github.com/fiorsaoirse/calculator#readme",
   "devDependencies": {
+    "@types/jest": "^28.1.3",
+    "jest": "^28.1.2",
     "typescript": "^4.7.4"
   }
 }

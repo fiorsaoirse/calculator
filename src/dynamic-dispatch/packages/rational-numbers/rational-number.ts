@@ -1,5 +1,5 @@
 import { OperationType } from '../../operations';
-import { register } from '../../generic';
+import { REGISTER } from '../../app';
 import { attachTag } from '../tag';
 import { IRationalNumber, RationalType, RATIONAL_NUMBER } from './contracts';
 
@@ -49,7 +49,14 @@ const div = (x: IRationalNumber, y: IRationalNumber): RationalType => {
     return make(numer, denom);
 }
 
-const install = (): void => {
+const stringify = (value: IRationalNumber): string => {
+    const numer = getNumer(value);
+    const denom = getDenom(value);
+
+    return `${numer}/${denom}`;
+}
+
+const install = (register: REGISTER): void => {
     const types = [RATIONAL_NUMBER, RATIONAL_NUMBER] as const;
 
     register(OperationType.Make, RATIONAL_NUMBER, make);
@@ -57,6 +64,7 @@ const install = (): void => {
     register(OperationType.Sub, types, sub);
     register(OperationType.Mul, types, mul);
     register(OperationType.Div, types, div);
+    register(OperationType.Stringify, RATIONAL_NUMBER, stringify);
 }
 
 export default install;

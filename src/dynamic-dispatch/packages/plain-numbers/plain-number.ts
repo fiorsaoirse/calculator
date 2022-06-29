@@ -1,5 +1,5 @@
+import { REGISTER } from '../../app';
 import { OperationType } from '../../operations';
-import { register } from '../../generic';
 import { attachTag } from '../tag';
 import { PlainType, PLAIN_NUMBER } from './contracts';
 
@@ -17,7 +17,9 @@ const mul = (x: number, y: number): PlainType => make(x * y);
 
 const div = (x: number, y: number): PlainType => make(x / y);
 
-const install = (): void => {
+const stringify = (x: number): string => x.toString();
+
+const install = (register: REGISTER): void => {
     const types = [PLAIN_NUMBER, PLAIN_NUMBER] as const;
 
     register(OperationType.Make, PLAIN_NUMBER, make);
@@ -25,6 +27,7 @@ const install = (): void => {
     register(OperationType.Sub, types, sub);
     register(OperationType.Mul, types, mul);
     register(OperationType.Div, types, div);
+    register(OperationType.Stringify, PLAIN_NUMBER, stringify);
 }
 
 export default install;
