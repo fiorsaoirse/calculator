@@ -48,7 +48,7 @@ export function register(
 }
 
 export function getMethod(operation: Extract<OperationType, OperationType.Make>, type: TYPE): MakeFunction;
-export function getMethod(operation: Extract<OperationType, OperationType.Make>, type: TYPE): OperandsFunction;
+export function getMethod(operation: Exclude<OperationType, OperationType.Make>, type: TYPES): OperandsFunction;
 
 export function getMethod(operation: OperationType, type: TYPE | TYPES): MakeFunction | OperandsFunction | never {
     if (operation === OperationType.Make) {
