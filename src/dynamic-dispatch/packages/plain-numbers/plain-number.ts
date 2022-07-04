@@ -1,5 +1,5 @@
-import { REGISTER } from '../../app';
-import { OperationType } from '../../operations';
+import { APP, REGISTER } from '../../app';
+import { MakeFunction, OperationType } from '../../operations';
 import { attachTag } from '../tag';
 import { PlainType, PLAIN_NUMBER } from './contracts';
 
@@ -19,7 +19,9 @@ const div = (x: number, y: number): PlainType => make(x / y);
 
 const stringify = (x: number): string => x.toString();
 
-const install = (register: REGISTER): void => {
+const install = (app: APP): MakeFunction => {
+    const { register, getMethod } = app;
+
     const types = [PLAIN_NUMBER, PLAIN_NUMBER] as const;
 
     register(OperationType.Make, PLAIN_NUMBER, make);
@@ -28,6 +30,8 @@ const install = (register: REGISTER): void => {
     register(OperationType.Mul, types, mul);
     register(OperationType.Div, types, div);
     register(OperationType.Stringify, PLAIN_NUMBER, stringify);
+
+    return getMethod(OperationType.Make, PLAIN_NUMBER);
 }
 
 export default install;
