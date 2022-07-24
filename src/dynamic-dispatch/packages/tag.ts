@@ -1,16 +1,20 @@
-export type TaggedEntity<Tag extends string, Content> = { tag: Tag, content: Content };
+export type Tag<T> = T extends string ? T : never;
+export type Content = any;
 
-const isTaggedEntity = (value: unknown): value is TaggedEntity<string, any> => {
-    return !!(value as TaggedEntity<string, any>).tag;
+export interface ITaggedEntity<T> {
+    tag: Tag<T>;
+    content: Content
+};
+
+const isTaggedEntity = (value: unknown): value is ITaggedEntity<any> => {
+    return !!(value as ITaggedEntity<any>).tag;
 }
 
-export const attachTag = <Tag extends string, Content>
-    (tag: Tag, content: Content): TaggedEntity<Tag, Content> => {
+export const attachTag = <T extends string>(tag: Tag<T>, content: Content): ITaggedEntity<T> => {
     return { tag, content };
 }
 
-export const getTag = <Tag extends string, Content>
-    (taggedEntity: TaggedEntity<Tag, Content>): string => {
+export const getTag = <T extends string>(taggedEntity: ITaggedEntity<T>): string => {
     if (isTaggedEntity(taggedEntity)) {
         return taggedEntity.tag;
     }
@@ -18,8 +22,7 @@ export const getTag = <Tag extends string, Content>
     throw new Error(`Wrong tagged data: ${JSON.stringify(taggedEntity)}`);
 }
 
-export const getContent = <Tag extends string, Content>
-    (taggedEntity: TaggedEntity<Tag, Content>): Content => {
+export const getContent = <T>(taggedEntity: ITaggedEntity<T>): Content => {
     if (isTaggedEntity(taggedEntity)) {
         return taggedEntity.content;
     }

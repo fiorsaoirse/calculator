@@ -6,6 +6,8 @@ type TYPES = readonly [TYPE, TYPE];
 type DYNAMIC_METHOD = Map<TYPE, MakeFunction | OperandsFunction>;
 type DYNAMIC_TABLE = Map<OperationType, DYNAMIC_METHOD>;
 
+const SEPARATOR = ':';
+
 export type REGISTER = {
     (operation: Extract<OperationType, OperationType.Make>, type: TYPE, method: MakeFunction): void;
     (operation: Exclude<OperationType, OperationType.Make | OperationType.Stringify>, type: TYPES, method: OperandsFunction): void;
@@ -71,7 +73,7 @@ export function app(): APP {
         }
 
         const operationTable = dynamicDispatchTable.get(operation);
-        operationTable!.set(type.join(','), method);
+        operationTable!.set(type.join(SEPARATOR), method);
     }
 
     function getMethod(operation: Extract<OperationType, OperationType.Make>, type: TYPE): MakeFunction;
@@ -92,9 +94,7 @@ export function app(): APP {
             }
 
             return makeFunction;
-        }
-
-        if (operation === OperationType.Stringify) {
+        } else if (operation === OperationType.Stringify) {
             if (!isString(type)) {
                 throw new Error(`The type key for stringify function has to be string`);
             }
@@ -107,20 +107,20 @@ export function app(): APP {
             }
 
             return stringifyFunction;
+        } else {
+            if (!Array.isArray(type)) {
+                throw new Error(`The type key for make function has to be array of types`);
+            }
+
+            const method = dynamicDispatchTable.get(operation);
+            const func = method!.get(type.join(SEPARATOR));
+
+            if (!func) {
+                throw new Error(`Can not find the ${operation} method for type "${type}"!`);
+            }
+
+            return func;
         }
-
-        if (!isString(type)) {
-            throw new Error(`The type key for make function has to be array of types`);
-        }
-
-        const method = dynamicDispatchTable.get(operation);
-        const func = method!.get(type);
-
-        if (!func) {
-            throw new Error(`Can not find the ${operation} method for type "${type}"!`);
-        }
-
-        return func;
     }
 
     return {

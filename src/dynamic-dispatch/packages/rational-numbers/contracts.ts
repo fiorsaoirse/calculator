@@ -1,4 +1,4 @@
-import { TaggedEntity } from '../tag';
+import { ITaggedEntity } from '../tag';
 
 export const RATIONAL_NUMBER = 'rational-number';
 
@@ -7,4 +7,4 @@ export interface IRationalNumber {
     denom: number;
 }
 
-export type RationalType = TaggedEntity<typeof RATIONAL_NUMBER, IRationalNumber>;
+export type RationalType = ITaggedEntity<typeof RATIONAL_NUMBER, IRationalNumber>;

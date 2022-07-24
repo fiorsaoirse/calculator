@@ -1,21 +1,21 @@
-import { APP, REGISTER } from '../../app';
+import { APP } from '../../app';
 import { MakeFunction, OperationType } from '../../operations';
 import { attachTag } from '../tag';
-import { PlainType, PLAIN_NUMBER } from './contracts';
+import { IPlainType, PLAIN_NUMBER } from './contracts';
 
-const tag = (content: number): PlainType => {
-    return attachTag(PLAIN_NUMBER, content);
+const tag = (content: number): IPlainType => {
+    return attachTag<typeof PLAIN_NUMBER>(PLAIN_NUMBER, content);
 }
 
-const make = (x: number): PlainType => tag(x);
+const make = (x: number): IPlainType => tag(x);
 
-const add = (x: number, y: number): PlainType => make(x + y);
+const add = (x: number, y: number): IPlainType => make(x + y);
 
-const sub = (x: number, y: number): PlainType => make(x - y);
+const sub = (x: number, y: number): IPlainType => make(x - y);
 
-const mul = (x: number, y: number): PlainType => make(x * y);
+const mul = (x: number, y: number): IPlainType => make(x * y);
 
-const div = (x: number, y: number): PlainType => make(x / y);
+const div = (x: number, y: number): IPlainType => make(x / y);
 
 const stringify = (x: number): string => x.toString();
 

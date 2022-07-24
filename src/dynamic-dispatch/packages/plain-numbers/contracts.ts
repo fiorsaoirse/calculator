@@ -1,5 +1,8 @@
-import { TaggedEntity } from '../tag';
+import { ITaggedEntity } from '../tag';
 
 export const PLAIN_NUMBER = 'plain-number';
 
-export type PlainType = TaggedEntity<typeof PLAIN_NUMBER, number>;
+export interface IPlainType extends ITaggedEntity<typeof PLAIN_NUMBER> {
+    tag: typeof PLAIN_NUMBER;
+    content: number
+};
