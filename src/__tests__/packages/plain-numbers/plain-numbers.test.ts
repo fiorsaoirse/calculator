@@ -1,5 +1,5 @@
 import { app } from '../../../dynamic-dispatch';
-import { installOperations, installStringify, MakeFunction } from '../../../dynamic-dispatch/operations';
+import { installOperations, MakeFunction } from '../../../dynamic-dispatch/operations';
 import installPlainNumbers from '../../../dynamic-dispatch/packages/plain-numbers';
 
 describe('Plain Number package', () => {
@@ -15,17 +15,15 @@ describe('Plain Number package', () => {
 
         make = installPlainNumbers(application);
 
-        const { stringify: stringifyOperation } = installStringify(application.getMethod);
-
         const {
             add: addOperation,
             sub: subOperation,
             div: divOperation,
-            mul: mulOperation
+            mul: mulOperation,
+            stringify: stringifyOperation
         } = installOperations(application.getMethod);
 
         stringify = stringifyOperation;
-
         add = addOperation;
         sub = subOperation;
         mul = mulOperation;
